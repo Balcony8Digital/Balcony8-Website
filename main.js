@@ -21,8 +21,40 @@
     setTimeout(start, 2500);
   }
 
-  // ---- C2: click to copy on desktop (phones keep tel:/mailto: behaviour) ----
+  // ---- After the intro: drop the intro classes so hover animations start from a clean state ----
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var ready = !root.classList.contains('anim');
+  var finishIntro = function () {
+    if (ready) return;
+    ready = true;
+    root.classList.remove('anim', 'play');
+  };
+  var underline = document.querySelector('.wordmark .u');
+  if (!ready && underline) {
+    underline.addEventListener('animationend', finishIntro, { once: true });
+    setTimeout(finishIntro, 6000);
+  }
+
+  // Re-run a one-shot hover animation, letting it finish before it can run again.
+  var replay = function (el, cls, endTarget) {
+    if (!ready || reduced.matches || !finePointer.matches || el.classList.contains(cls)) return;
+    el.classList.add(cls);
+    (endTarget || el).addEventListener('animationend', function () { el.classList.remove(cls); }, { once: true });
+  };
+
+  // Headline: each letter re-inks as the cursor passes over it
+  document.querySelectorAll('.headline .l').forEach(function (l) {
+    l.addEventListener('pointerenter', function () { replay(l, 'reink'); });
+  });
+
+  // Wordmark: letters ripple and the underline re-signs
+  var wordmark = document.querySelector('.wordmark');
+  if (wordmark && underline) {
+    wordmark.addEventListener('pointerenter', function () { replay(wordmark, 'wave', underline); });
+  }
+
+  // ---- C2: click to copy on desktop (phones keep tel:/mailto: behaviour) ----
   document.querySelectorAll('.contact [data-copy]').forEach(function (link) {
     var tip = link.querySelector('.tip');
     var timer;
