@@ -274,7 +274,7 @@ p { margin: 0; }
   100% { transform: none; filter: none; }
 }
 .anim .bg { transform: scale(1.07); filter: contrast(.7) brightness(1.07) blur(4px); }
-.play .bg { animation: b8-press 1.8s cubic-bezier(.16, 1, .3, 1) both; }
+.play .bg { animation: b8-press 1.3s cubic-bezier(.16, 1, .3, 1) both; }
 
 /* A2 — letter-by-letter ink flick with a feathered (gradient-masked) leading edge.
    Each letter's box is padded out so the soft mask and blur never show a hard rectangle. */
@@ -299,7 +299,7 @@ p { margin: 0; }
   opacity: 0;
 }
 .play .headline .l {
-  animation: b8-letter .8s cubic-bezier(.22, 1, .36, 1) calc(.55s + var(--i) * .065s) both;
+  animation: b8-letter .6s cubic-bezier(.22, 1, .36, 1) calc(.35s + var(--i) * .045s) both;
 }
 
 /* Contact + footer copy fade up */
@@ -307,9 +307,9 @@ p { margin: 0; }
 @keyframes b8-fade { from { opacity: 0; translate: 0 12px; } }
 .anim:not(.play) .contact .cl,
 .anim:not(.play) .footer .fade { opacity: 0; }
-.play .contact .cl { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) calc(1.55s + var(--i) * .1s) both; }
-.play .footer .locations { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) 2s both; }
-.play .footer .copyright { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) 2.1s both; }
+.play .contact .cl { animation: b8-fade .7s cubic-bezier(.16, 1, .3, 1) calc(1.1s + var(--i) * .08s) both; }
+.play .footer .locations { animation: b8-fade .7s cubic-bezier(.16, 1, .3, 1) 1.35s both; }
+.play .footer .copyright { animation: b8-fade .7s cubic-bezier(.16, 1, .3, 1) 1.42s both; }
 
 /* D2 — wordmark letters drop in, then the underline signs it */
 .wordmark .g,
@@ -319,8 +319,8 @@ p { margin: 0; }
 @keyframes b8-underline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .anim .wordmark .g { opacity: 0; }
 .anim .wordmark .u { transform: scaleX(0); }
-.play .wordmark .g { animation: b8-drop .7s cubic-bezier(.16, 1, .3, 1) calc(2.05s + var(--i) * .07s) both; }
-.play .wordmark .u { animation: b8-underline .7s cubic-bezier(.16, 1, .3, 1) 2.75s both; }
+.play .wordmark .g { animation: b8-drop .55s cubic-bezier(.16, 1, .3, 1) calc(1.4s + var(--i) * .05s) both; }
+.play .wordmark .u { animation: b8-underline .55s cubic-bezier(.16, 1, .3, 1) 1.85s both; }
 
 @media (prefers-reduced-motion: reduce) {
   .bg, .headline .l, .contact .cl, .footer .fade, .wordmark .g, .wordmark .u {
