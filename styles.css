@@ -2,20 +2,27 @@
    Built from Figma "B8BB Landing Page": desktop frame 1728×1117, mobile frame 390×844.
    Desktop measurements use --u (1 design px at 1728 wide); mobile uses real px from the 390 frame. */
 
-/* Brand fonts — drop the licensed files into /fonts and these take over automatically.
-   Until then the headline is rendered from Figma vector outlines (assets/headline.svg)
-   and body copy falls back to Montserrat. */
+/* Brand fonts */
+@font-face {
+  font-family: "Hot Mess";
+  src: url("/fonts/HotMess-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
 @font-face {
   font-family: "Eleven Eleven";
-  src: local("Eleven Eleven Medium"), local("ElevenEleven-Medium");
+  src: url("/fonts/ElevenEleven-Medium.woff2") format("woff2");
   font-weight: 500;
+  font-style: normal;
   font-display: swap;
 }
 
 :root {
   --ink: #000;
   --paper: #e9e7e3;
-  --font-body: "Eleven Eleven", "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Hot Mess", "Brush Script MT", cursive;
+  --font-body: "Eleven Eleven", "Helvetica Neue", Arial, sans-serif;
   --u: calc(100vw / 1728);
 }
 
@@ -65,32 +72,43 @@ p { margin: 0; }
   isolation: isolate;
 }
 
-/* Background: Figma places the emboss image at 115% of the frame, centred (-7.5% each side) */
+/* Background: Figma places the emboss image at 115% of the frame height, centred.
+   The image is sized from the viewport HEIGHT so the seal keeps the Figma proportion
+   (~61% of screen height) on wide/short browser windows; it only grows past that
+   when the screen is wider than the image can cover (aspect > ~1.78). */
 .bg {
   position: absolute;
-  inset: -7.5%;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
 }
 .bg img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 50%;
+  height: max(115%, calc(100vw / 1.5471)); /* image is 2446×1581 */
+  width: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
 }
 
 /* ---------- Desktop (default) ---------- */
 .headline {
   position: absolute;
-  left: calc(74.17 * var(--u));
+  left: calc(39 * var(--u));
   top: 50.3%;
-  width: calc(434 * var(--u));
+  width: calc(498 * var(--u));
   margin: 0;
   transform: translateY(-50%);
-  line-height: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc(110 * var(--u));
+  line-height: calc(90 / 110);
+  text-transform: uppercase;
+  text-align: center;
 }
-.headline img { display: block; width: 100%; height: auto; }
+.headline span { display: block; }
 
 .contact {
   position: absolute;
@@ -148,25 +166,18 @@ p { margin: 0; }
   .page { min-height: 640px; }
 
   /* Mobile emboss: 1705×1102 at 390×844 → 130.57% of height, centred at x 50%, y 56.4% */
-  .bg {
-    inset: 0;
-  }
   .bg img {
-    position: absolute;
-    left: 50%;
     top: 56.4%;
-    width: auto;
     height: 130.57%;
-    max-width: none;
-    object-fit: initial;
-    transform: translate(-50%, -50%);
   }
 
   .headline {
     left: 50%;
-    top: 79.5px;
-    width: 260.4px; /* 66px Hot Mess, scaled from the 110px desktop outlines */
+    top: 72.5px;
+    width: 290px;
     transform: translateX(-50%);
+    font-size: 66px;
+    line-height: 58.26px;
   }
 
   .contact {

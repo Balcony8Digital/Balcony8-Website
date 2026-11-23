@@ -11,10 +11,8 @@
   <meta property="og:image" content="/assets/bg-desktop.jpg">
   <link rel="preload" as="image" href="/assets/bg-mobile.jpg" media="(max-width: 767px)">
   <link rel="preload" as="image" href="/assets/bg-desktop.jpg" media="(min-width: 768px)">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Temporary stand-in for "Eleven Eleven" until the licensed font files are added (see styles.css) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/HotMess-Regular.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/ElevenEleven-Medium.woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -25,10 +23,7 @@
       <img src="/assets/bg-desktop.jpg" alt="" decoding="async" fetchpriority="high">
     </picture>
 
-    <h1 class="headline">
-      <img src="/assets/headline.svg" alt="" width="434" height="171">
-      <span class="sr-only">We'll be back soon</span>
-    </h1>
+    <h1 class="headline"><span>We’ll be</span> <span>back soon</span></h1>
 
     <address class="contact">
       <a href="tel:+97144272186">+971 4 427 2186</a>
