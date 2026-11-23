@@ -72,10 +72,9 @@ p { margin: 0; }
   isolation: isolate;
 }
 
-/* Background: Figma places the emboss image at 115% of the frame height, centred.
-   The image is sized from the viewport HEIGHT so the seal keeps the Figma proportion
-   (~61% of screen height) on wide/short browser windows; it only grows past that
-   when the screen is wider than the image can cover (aspect > ~1.78). */
+/* Background: the wide emboss shot (3852×2491) — the seal fills 32.2% of its height, centred at 49%.
+   The image is sized from the viewport HEIGHT so the seal sits at ~55% of screen height on any
+   desktop shape; it only scales by width on screens wider than ~2.6:1 so the paper still covers. */
 .bg {
   position: absolute;
   inset: 0;
@@ -87,10 +86,10 @@ p { margin: 0; }
   left: 50%;
   top: 50%;
   display: block;
-  height: max(115%, calc(100vw / 1.5471)); /* image is 2446×1581 */
+  height: max(170.8%, calc(100vw / 1.5464)); /* 55% / 32.2% seal share */
   width: auto;
   max-width: none;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -49%);
 }
 
 /* ---------- Desktop (default) ---------- */
@@ -172,6 +171,7 @@ p { margin: 0; }
   .bg img {
     top: 56.4%;
     height: 130.57%;
+    transform: translate(-50%, -50%);
   }
 
   .headline {
