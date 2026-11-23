@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Balcony8 Brand Buro — We'll be back soon</title>
   <meta name="description" content="Balcony8 Brand Buro. Our new website is under construction — we'll be back soon. Dubai. Cape Town. Cochin.">
-  <meta name="theme-color" content="#e9e7e3">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#e9e7e3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1c1c" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Balcony8 Brand Buro">
   <meta property="og:description" content="We'll be back soon.">
   <meta property="og:image" content="/assets/bg-desktop.jpg">
-  <link rel="preload" as="image" href="/assets/bg-mobile.jpg" media="(max-width: 767px)">
-  <link rel="preload" as="image" href="/assets/bg-desktop.jpg" media="(min-width: 768px)">
+  <link rel="preload" as="image" href="/assets/bg-mobile.jpg" media="(max-width: 767px) and (prefers-color-scheme: light)">
+  <link rel="preload" as="image" href="/assets/bg-desktop.jpg" media="(min-width: 768px) and (prefers-color-scheme: light)">
+  <link rel="preload" as="image" href="/assets/bg-dark.jpg" media="(prefers-color-scheme: dark)">
   <link rel="preload" as="font" type="font/woff2" href="/fonts/HotMess-Regular.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/ElevenEleven-Medium.woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
@@ -24,6 +27,7 @@
   <main class="page">
     <!-- Embossed seal background -->
     <picture class="bg" aria-hidden="true">
+      <source media="(prefers-color-scheme: dark)" srcset="/assets/bg-dark.jpg">
       <source media="(max-width: 767px)" srcset="/assets/bg-mobile.jpg">
       <img src="/assets/bg-desktop.jpg" alt="" decoding="async" fetchpriority="high">
     </picture>

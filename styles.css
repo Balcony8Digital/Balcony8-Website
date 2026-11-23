@@ -19,6 +19,7 @@
 }
 
 :root {
+  color-scheme: light dark;
   --ink: #000;
   --paper: #e9e7e3;
   --font-display: "Hot Mess", "Brush Script MT", cursive;
@@ -303,7 +304,7 @@ p { margin: 0; }
   padding: 4px 10px 3px;
   border-radius: 999px;
   background: var(--ink);
-  color: #f4f2ee;
+  color: var(--paper);
   font-size: 10px;
   line-height: 1.4;
   letter-spacing: .12em;
@@ -401,5 +402,46 @@ p { margin: 0; }
   .bg, .headline .l, .contact .cl, .footer .fade, .wordmark .g, .wordmark .u {
     animation: none !important; opacity: 1 !important; filter: none !important; transform: none !important;
     -webkit-mask-image: none !important; mask-image: none !important;
+  }
+}
+
+/* ---------- Dark mode (follows the visitor's system setting) ----------
+   Chrome-seal artwork on a near-black gradient. The photo is a smooth vertical gradient
+   (#1e1e1e → #111), so the page paints the same gradient and the photo's edges are feathered
+   into it: the seal stays at the light-mode size (~55% of screen height) on any screen shape. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f3f1ed;
+    --paper: #151515;
+  }
+  html,
+  body { background: #151515; }
+  .page { background: linear-gradient(180deg, #1e1e1e 0%, #191919 50%, #111 100%); }
+
+  /* seal fills 61.1% of the photo's height, centred at 49.35% */
+  .bg img {
+    top: 50%;
+    width: auto;
+    height: 90%;
+    transform: translate(-50%, -49.35%);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent),
+                        linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+    -webkit-mask-composite: source-in;
+            mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent),
+                        linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+            mask-composite: intersect;
+  }
+
+  /* wordmark is inline SVG with black fills: reverse it */
+  .wordmark path { fill: var(--ink); }
+}
+@media (prefers-color-scheme: dark) and (max-width: 767px) {
+  html,
+  body { background: #151515; }
+  .bg img {
+    top: 56.4%;
+    width: 230%;
+    height: auto;
+    transform: translate(-50%, -50%);
   }
 }
