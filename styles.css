@@ -1,0 +1,209 @@
+/* Balcony8 — under construction (static)
+   Built from Figma "B8BB Landing Page": desktop frame 1728×1117, mobile frame 390×844.
+   Desktop measurements use --u (1 design px at 1728 wide); mobile uses real px from the 390 frame. */
+
+/* Brand fonts — drop the licensed files into /fonts and these take over automatically.
+   Until then the headline is rendered from Figma vector outlines (assets/headline.svg)
+   and body copy falls back to Montserrat. */
+@font-face {
+  font-family: "Eleven Eleven";
+  src: local("Eleven Eleven Medium"), local("ElevenEleven-Medium");
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  --ink: #000;
+  --paper: #e9e7e3;
+  --font-body: "Eleven Eleven", "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --u: calc(100vw / 1728);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover,
+a:focus-visible { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+p { margin: 0; }
+
+/* ---------- Page ---------- */
+.page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Background: Figma places the emboss image at 115% of the frame, centred (-7.5% each side) */
+.bg {
+  position: absolute;
+  inset: -7.5%;
+  z-index: -1;
+  pointer-events: none;
+}
+.bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* ---------- Desktop (default) ---------- */
+.headline {
+  position: absolute;
+  left: calc(74.17 * var(--u));
+  top: 50.3%;
+  width: calc(434 * var(--u));
+  margin: 0;
+  transform: translateY(-50%);
+  line-height: 0;
+}
+.headline img { display: block; width: 100%; height: auto; }
+
+.contact {
+  position: absolute;
+  right: calc(90 * var(--u));
+  top: 50.3%;
+  width: calc(412 * var(--u));
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-style: normal;
+  font-size: max(15px, calc(24 * var(--u)));
+  line-height: 1.75; /* 42px at 24px */
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(47.49 * var(--u));
+  height: max(28px, calc(46.51 * var(--u)));
+}
+.wordmark {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: max(165px, calc(270.15 * var(--u)));
+  height: auto;
+  transform: translateX(-50%);
+}
+.locations,
+.copyright {
+  position: absolute;
+  top: 50%;
+  font-size: max(11px, calc(12 * var(--u)));
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.locations {
+  left: calc(196.5 * var(--u));
+  transform: translate(-50%, -50%);
+}
+.copyright {
+  right: calc(296 * var(--u));
+  transform: translate(50%, -50%);
+}
+
+/* ---------- Mobile (Figma "Mobile" 390×844) ---------- */
+@media (max-width: 767px) {
+  html,
+  body { background: #f9f9fb; }
+
+  .page { min-height: 640px; }
+
+  /* Mobile emboss: 1705×1102 at 390×844 → 130.57% of height, centred at x 50%, y 56.4% */
+  .bg {
+    inset: 0;
+  }
+  .bg img {
+    position: absolute;
+    left: 50%;
+    top: 56.4%;
+    width: auto;
+    height: 130.57%;
+    max-width: none;
+    object-fit: initial;
+    transform: translate(-50%, -50%);
+  }
+
+  .headline {
+    left: 50%;
+    top: 79.5px;
+    width: 260.4px; /* 66px Hot Mess, scaled from the 110px desktop outlines */
+    transform: translateX(-50%);
+  }
+
+  .contact {
+    left: 50%;
+    right: auto;
+    top: 208px;
+    width: 326px;
+    max-width: calc(100% - 32px);
+    transform: translateX(-50%);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    gap: 4.6px;
+  }
+
+  .footer {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    padding-bottom: 50.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wordmark,
+  .locations,
+  .copyright {
+    position: static;
+    transform: none;
+  }
+  .wordmark { width: 220px; }
+  .locations,
+  .copyright {
+    opacity: 0.6;
+    line-height: 1;
+  }
+  .locations { font-size: 11px; margin-top: 13.5px; }
+  .copyright { font-size: 9px; margin-top: 16px; }
+}
