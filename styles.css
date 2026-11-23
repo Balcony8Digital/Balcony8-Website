@@ -25,6 +25,7 @@
   --font-display: "Hot Mess", "Brush Script MT", cursive;
   --font-body: "Eleven Eleven", "Helvetica Neue", Arial, sans-serif;
   --u: calc(100vw / 1728);
+  --mid: 45%; /* vertical centre of the headline / seal / contact row (desktop) */
 }
 
 *,
@@ -85,7 +86,7 @@ p { margin: 0; }
 .bg img {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: var(--mid);
   display: block;
   height: max(170.8%, calc(100vw / 1.5464)); /* 55% / 32.2% seal share */
   width: auto;
@@ -97,7 +98,7 @@ p { margin: 0; }
 .headline {
   position: absolute;
   left: calc(39 * var(--u));
-  top: 50.3%;
+  top: var(--mid);
   width: calc(498 * var(--u));
   margin: 0;
   transform: translateY(-50%);
@@ -114,7 +115,7 @@ p { margin: 0; }
 .contact {
   position: absolute;
   right: calc(90 * var(--u));
-  top: 50.3%;
+  top: var(--mid);
   width: calc(412 * var(--u));
   transform: translateY(-50%);
   display: flex;
@@ -420,7 +421,7 @@ p { margin: 0; }
 
   /* seal fills 61.1% of the photo's height, centred at 49.35% */
   .bg img {
-    top: 50%;
+    top: var(--mid);
     width: auto;
     height: 90%;
     transform: translate(-50%, -49.35%);
