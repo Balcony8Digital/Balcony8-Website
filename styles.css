@@ -108,7 +108,8 @@ p { margin: 0; }
   text-transform: uppercase;
   text-align: center;
 }
-.headline span { display: block; }
+.headline .w { display: block; }
+.headline .l { display: inline-block; }
 
 .contact {
   position: absolute;
@@ -134,6 +135,8 @@ p { margin: 0; }
   height: max(28px, calc(46.51 * var(--u)));
 }
 .wordmark {
+  display: block;
+  overflow: visible;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -217,4 +220,111 @@ p { margin: 0; }
   }
   .locations { font-size: 11px; margin-top: 13.5px; }
   .copyright { font-size: 9px; margin-top: 16px; }
+}
+
+/* ---------- Contact micro-interaction (C2) ---------- */
+.contact .cl { position: relative; display: inline-block; text-decoration: none; }
+.contact .cl::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: .22em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform .45s cubic-bezier(.16, 1, .3, 1);
+}
+.contact .cl:hover,
+.contact .cl:focus-visible { text-decoration: none; }
+.contact .cl:hover::after,
+.contact .cl:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
+.contact .tip {
+  position: absolute;
+  left: 50%; bottom: 100%;
+  transform: translate(-50%, 6px);
+  padding: 4px 10px 3px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #f4f2ee;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .12em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, transform .3s cubic-bezier(.16, 1, .3, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .contact .cl:hover .tip,
+  .contact .cl.copied .tip { opacity: 1; transform: translate(-50%, -2px); }
+}
+@media not ((hover: hover) and (pointer: fine)) {
+  .contact .tip { display: none; }
+}
+
+/* ---------- Intro sequence ----------
+   html.anim  = armed before first paint (motion allowed): elements wait in their start state.
+   html.play  = set by main.js once fonts + background are ready: the timeline runs.
+   Without JS or with reduced motion, neither class is set and the page simply shows its final state. */
+
+/* B2 — emboss press-in */
+@keyframes b8-press {
+  0%   { transform: scale(1.07); filter: contrast(.7) brightness(1.07) blur(4px); }
+  60%  { filter: contrast(1.04) brightness(1) blur(0); }
+  100% { transform: none; filter: none; }
+}
+.anim .bg { transform: scale(1.07); filter: contrast(.7) brightness(1.07) blur(4px); }
+.play .bg { animation: b8-press 1.8s cubic-bezier(.16, 1, .3, 1) both; }
+
+/* A2 — letter-by-letter ink flick with a feathered (gradient-masked) leading edge.
+   Each letter's box is padded out so the soft mask and blur never show a hard rectangle. */
+.headline .l {
+  padding: .18em .22em;
+  margin: -.18em -.22em;
+}
+@keyframes b8-letter {
+  0%   { -webkit-mask-position: 100% 0; mask-position: 100% 0; opacity: 0; filter: blur(6px); transform: translate(-.04em, .05em) skewX(-10deg); }
+  25%  { opacity: 1; }
+  100% { -webkit-mask-position: 0 0; mask-position: 0 0; opacity: 1; filter: blur(0); transform: none; }
+}
+.anim .headline .l {
+  -webkit-mask-image: linear-gradient(90deg, #000 38%, transparent 62%);
+          mask-image: linear-gradient(90deg, #000 38%, transparent 62%);
+  -webkit-mask-size: 260% 100%;
+          mask-size: 260% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 0;
+          mask-position: 100% 0;
+  opacity: 0;
+}
+.play .headline .l {
+  animation: b8-letter .8s cubic-bezier(.22, 1, .36, 1) calc(.55s + var(--i) * .065s) both;
+}
+
+/* Contact + footer copy fade up */
+/* "from"-only keyframes: each element animates to its own resting opacity (mobile footer rests at .6) */
+@keyframes b8-fade { from { opacity: 0; translate: 0 12px; } }
+.anim:not(.play) .contact .cl,
+.anim:not(.play) .footer .fade { opacity: 0; }
+.play .contact .cl { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) calc(1.55s + var(--i) * .1s) both; }
+.play .footer .locations { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) 2s both; }
+.play .footer .copyright { animation: b8-fade .9s cubic-bezier(.16, 1, .3, 1) 2.1s both; }
+
+/* D2 — wordmark letters drop in, then the underline signs it */
+.wordmark .g,
+.wordmark .u { transform-box: fill-box; }
+.wordmark .u { transform-origin: left center; }
+@keyframes b8-drop { from { opacity: 0; transform: translateY(-45%); } to { opacity: 1; transform: none; } }
+@keyframes b8-underline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.anim .wordmark .g { opacity: 0; }
+.anim .wordmark .u { transform: scaleX(0); }
+.play .wordmark .g { animation: b8-drop .7s cubic-bezier(.16, 1, .3, 1) calc(2.05s + var(--i) * .07s) both; }
+.play .wordmark .u { animation: b8-underline .7s cubic-bezier(.16, 1, .3, 1) 2.75s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bg, .headline .l, .contact .cl, .footer .fade, .wordmark .g, .wordmark .u {
+    animation: none !important; opacity: 1 !important; filter: none !important; transform: none !important;
+    -webkit-mask-image: none !important; mask-image: none !important;
+  }
 }
