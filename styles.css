@@ -94,6 +94,8 @@ p { margin: 0; }
   transform: translate(-50%, -49%);
 }
 
+.seal-slot { position: absolute; inset: 0; }
+
 /* ---------- Desktop (default) ---------- */
 .headline {
   position: absolute;
@@ -211,68 +213,104 @@ p { margin: 0; }
   transform: translate(50%, -50%);
 }
 
-/* ---------- Mobile (Figma "Mobile" 390×844) ---------- */
-@media (max-width: 767px) {
+/* ---------- Phones & portrait tablets: stacked layout ----------
+   The page is exactly the visible screen (svh = height with Safari's toolbars showing, vh fallback).
+   Headline + contact sit at the top, footer at the bottom, and the seal only gets the space left
+   between them (.seal-slot, a size container) so it can never run into the text on short screens. */
+@media (max-width: 767px), (max-aspect-ratio: 3/4) and (max-width: 1100px) {
   html,
-  body { background: #f9f9fb; }
+  body { background: #dcd8d2; }
 
-  .page { min-height: 640px; }
-
-  /* Mobile emboss: 1705×1102 at 390×844 → 130.57% of height, centred at x 50%, y 56.4% */
-  .bg img {
-    top: 56.4%;
-    height: 130.57%;
-    transform: translate(-50%, -50%);
-  }
-
-  .headline {
-    left: 50%;
-    top: 72.5px;
-    width: 290px;
-    transform: translateX(-50%);
-    font-size: 66px;
-    line-height: 58.26px;
-  }
-
-  .contact {
-    left: 50%;
-    right: auto;
-    top: 208px;
-    width: 326px;
-    max-width: calc(100% - 32px);
-    transform: translateX(-50%);
-    font-size: 14px;
-    line-height: 1.6;
-    letter-spacing: 1px;
-    gap: 4.6px;
-  }
-
-  .footer {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: auto;
-    padding-bottom: 50.5px;
+  .page {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+    height: 100svh;
+    min-height: 500px;
+    padding:
+      calc(env(safe-area-inset-top, 0px) + clamp(24px, 6.5svh, 72px))
+      max(16px, env(safe-area-inset-right, 0px))
+      calc(env(safe-area-inset-bottom, 0px) + clamp(18px, 4.5svh, 52px))
+      max(16px, env(safe-area-inset-left, 0px));
+    /* seal-free strip of the same paper, so the page is always covered */
+    background: #dcd8d2 url("/assets/paper.jpg") center / cover no-repeat;
   }
+
+  .headline,
+  .contact,
+  .footer,
   .wordmark,
+  .loc-row,
   .locations,
   .copyright {
     position: static;
     transform: none;
   }
-  .wordmark { width: 220px; }
+
+  .headline {
+    flex: none;
+    width: auto;
+    font-size: min(96px, 17vw, 8.2svh);
+    line-height: .883;
+  }
+
+  .contact {
+    flex: none;
+    width: auto;
+    margin-top: clamp(12px, 2.6svh, 28px);
+    font-size: clamp(13px, 3.6vw, 18px);
+    line-height: 1.6;
+    letter-spacing: 1px;
+  }
+
+  .seal-slot {
+    position: relative;
+    inset: auto;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    margin-block: clamp(6px, 1.6svh, 20px);
+    container-type: size;
+    z-index: -1;
+  }
+  /* zero-size anchor at the slot centre; the photo is drawn around it and may spill past the slot */
+  .bg {
+    inset: auto;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+  }
+  /* light photo: seal = 32.2% of image height / 24.9% of its height in width → fit 86% of slot height, 80% of width */
+  .bg img {
+    left: 0;
+    top: 0;
+    height: min(calc(100cqh * .86 / .322), calc(100cqw * .80 / .249));
+    width: auto;
+    transform: translate(-50%, -49%);
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+            mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  }
+
+  .footer {
+    flex: none;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wordmark { width: clamp(160px, 56vw, 240px); }
   .locations,
   .copyright {
     opacity: 0.6;
     line-height: 1;
   }
   .loc-row {
-    position: static;
-    transform: none;
-    margin-top: 11px;
+    margin-top: clamp(8px, 1.4svh, 14px);
     gap: 12px;
     opacity: 0.6;
   }
@@ -280,7 +318,7 @@ p { margin: 0; }
   .social { gap: 10px; }
   .social a { width: 15px; height: 15px; }
   .locations { font-size: 11px; }
-  .copyright { font-size: 9px; margin-top: 16px; }
+  .copyright { font-size: 9px; margin-top: clamp(10px, 1.8svh, 16px); }
 }
 
 /* ---------- Contact micro-interaction (C2) ---------- */
@@ -436,13 +474,14 @@ p { margin: 0; }
   /* wordmark is inline SVG with black fills: reverse it */
   .wordmark path { fill: var(--ink); }
 }
-@media (prefers-color-scheme: dark) and (max-width: 767px) {
+@media (prefers-color-scheme: dark) and (max-width: 767px), (prefers-color-scheme: dark) and (max-aspect-ratio: 3/4) and (max-width: 1100px) {
   html,
   body { background: #151515; }
+  .page { background: linear-gradient(180deg, #1e1e1e 0%, #191919 50%, #111 100%); }
+  /* chrome photo: seal = 61.1% of image height, 48.35% of its height in width */
   .bg img {
-    top: 56.4%;
-    width: 230%;
-    height: auto;
-    transform: translate(-50%, -50%);
+    top: 0;
+    height: min(calc(100cqh * .86 / .611), calc(100cqw * .80 / .4835));
+    transform: translate(-50%, -49.35%);
   }
 }

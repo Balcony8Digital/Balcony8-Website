@@ -28,12 +28,6 @@
 </head>
 <body>
   <main class="page">
-    <!-- Embossed seal background -->
-    <picture class="bg" aria-hidden="true">
-      <source media="(prefers-color-scheme: dark)" srcset="/assets/bg-dark.jpg">
-      <source media="(max-width: 767px)" srcset="/assets/bg-mobile.jpg">
-      <img src="/assets/bg-desktop.jpg" alt="" decoding="async" fetchpriority="high">
-    </picture>
 
     <h1 class="headline" aria-label="We’ll be back soon"><span class="w" aria-hidden="true"><span class="l" style="--i:0">W</span><span class="l" style="--i:1">e</span><span class="l" style="--i:2">’</span><span class="l" style="--i:3">l</span><span class="l" style="--i:4">l</span> <span class="l" style="--i:5">b</span><span class="l" style="--i:6">e</span></span> <span class="w" aria-hidden="true"><span class="l" style="--i:7">b</span><span class="l" style="--i:8">a</span><span class="l" style="--i:9">c</span><span class="l" style="--i:10">k</span> <span class="l" style="--i:11">s</span><span class="l" style="--i:12">o</span><span class="l" style="--i:13">o</span><span class="l" style="--i:14">n</span></span></h1>
 
@@ -41,6 +35,15 @@
       <a class="cl" href="tel:+97144272186" data-copy="+971 4 427 2186" style="--i:0">+971 4 427 2186<span class="tip" aria-hidden="true">Click to copy</span></a>
       <a class="cl" href="mailto:hello@balcony8.com" data-copy="hello@balcony8.com" style="--i:1">hello@balcony8.com<span class="tip" aria-hidden="true">Click to copy</span></a>
     </address>
+
+    <!-- Embossed seal: fills the page on desktop; on phones it sits in the space left between the text blocks -->
+    <div class="seal-slot">
+      <picture class="bg" aria-hidden="true">
+        <source media="(prefers-color-scheme: dark)" srcset="/assets/bg-dark.jpg">
+        <source media="(max-width: 767px)" srcset="/assets/bg-mobile.jpg">
+        <img src="/assets/bg-desktop.jpg" alt="" decoding="async" fetchpriority="high">
+      </picture>
+    </div>
 
     <footer class="footer">
       <svg class="wordmark" viewBox="0 0 270.15 46.51" role="img" aria-label="Balcony8" xmlns="http://www.w3.org/2000/svg">
