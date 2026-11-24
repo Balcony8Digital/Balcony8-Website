@@ -16,8 +16,21 @@
   <link rel="preload" as="image" href="/assets/bg-dark.jpg" media="(prefers-color-scheme: dark)">
   <link rel="preload" as="font" type="font/woff2" href="/fonts/HotMess-Regular.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/ElevenEleven-Medium.woff2" crossorigin>
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico?v=3" sizes="48x48">
+  <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml" id="favicon">
+  <script>
+    /* Pick the light/dark favicon explicitly and re-pick it when the system setting changes:
+       Chrome caches SVG favicons and does not re-evaluate their internal media query on its own. */
+    (function () {
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      var set = function () {
+        var link = document.getElementById('favicon');
+        if (link) link.href = '/favicon-' + (mq.matches ? 'dark' : 'light') + '.svg?v=3';
+      };
+      set();
+      if (mq.addEventListener) mq.addEventListener('change', set); else if (mq.addListener) mq.addListener(set);
+    })();
+  </script>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css">
   <script>
