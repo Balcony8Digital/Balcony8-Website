@@ -94,7 +94,7 @@ p { margin: 0; }
   transform: translate(-50%, -49%);
 }
 
-.seal-slot { position: absolute; inset: 0; }
+.seal-slot { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 
 /* ---------- Desktop (default) ---------- */
 .headline {
@@ -355,6 +355,9 @@ p { margin: 0; }
 @media (hover: hover) and (pointer: fine) {
   .contact .cl:hover .tip,
   .contact .cl.copied .tip { opacity: 1; transform: translate(-50%, -2px); }
+  /* email pill sits below its line so it never covers the phone number */
+  .contact .cl-mail .tip { bottom: auto; top: 100%; transform: translate(-50%, -6px); }
+  .contact .cl-mail:hover .tip { transform: translate(-50%, 2px); }
 }
 @media not ((hover: hover) and (pointer: fine)) {
   .contact .tip { display: none; }
